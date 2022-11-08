@@ -8,36 +8,41 @@ const pathCharacter = "*";
 class Field {
 	constructor(field) {
 		this.field = field;
-		let horizontalLocation = 0;
-		let verticalLocation = 0;
-		let currentLocation = field[verticalLocation][horizontalLocation];
-		let outerBoundVertical = verticalLocation.length;
-		let outerBoundHorizontal = horizontalLocation.length;
-		let isGameCurrent = true;
+		this.horizontalLocation = 0;
+		this.verticalLocation = 0;
+		this.outerBoundVertical = this.field.length;
+		this.outerBoundHorizontal = this.field[0].length;
+		this.currentLocation =
+			field[this.verticalLocation][this.horizontalLocation];
+		this.isGameCurrent = true;
 	}
+
 	print() {
-		return this.field.join("\n");
+		console.log(this.field.join("\n"));
+	}
+	printCharacter() {
+		return this.field.currentLocation;
 	}
 	moveResult(character) {
 		if (character === hat) {
 			console.log("You have won the game");
-			return isGameCurrent === false;
+			return this.isGameCurrent === false;
 		} else if (character === hole) {
 			console.log("Oh no! You've fallen into a hole");
-			return isGameCurrent === false;
+			return this.isGameCurrent === false;
 		} else if (character === fieldCharacter) {
-			myField.currentLocation = pathCharacter;
+			this.myField.currentLocation = pathCharacter;
 		} else {
 			console.log("How did we end up here???");
 		}
 	}
 	moveRight() {
-		if (horizontalLocation <= outerBoundHorizontal) {
-			horizontalLocation++;
-			this.moveResult(this.field.currentLocation);
+		if (this.horizontalLocation <= this.outerBoundHorizontal) {
+			this.horizontalLocation++;
+			this.moveResult(this.printCharacter);
 		} else {
 			console.log("You've fallen out of bounds");
-			return isGameCurrent === false;
+			return this.isGameCurrent === false;
 		}
 	}
 	moveLeft() {
@@ -81,12 +86,11 @@ const playGame = () => {
 
 		let userInput = prompt("Which way?");
 		if (userInput === "r" || "R" || "right" || "Right") {
-			moveRight();
+			myField.moveRight();
 		} else {
 			console.log("This isn`t working :(");
 		}
-	} while (isGameCurrent);
+	} while (this.isGameCurrent);
 };
 
 playGame();
-console.log(myField.print());
