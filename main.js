@@ -13,7 +13,7 @@ class Field {
 		this.outerBoundVertical = this.field.length;
 		this.outerBoundHorizontal = this.field[0].length;
 		this.currentLocation =
-			field[this.verticalLocation][this.horizontalLocation];
+			this.field[this.verticalLocation][this.horizontalLocation];
 		this.isGameCurrent = true;
 	}
 
@@ -21,17 +21,21 @@ class Field {
 		console.log(this.field.join("\n"));
 	}
 	printCharacter() {
-		return this.field.currentLocation;
+		return this.field[this.verticalLocation][this.horizontalLocation];
 	}
 	moveResult(character) {
+		console.log("character = " + character);
 		if (character === hat) {
 			console.log("You have won the game");
-			return this.isGameCurrent === false;
+			return (this.isGameCurrent = false);
 		} else if (character === hole) {
 			console.log("Oh no! You've fallen into a hole");
-			return this.isGameCurrent === false;
+			return (this.isGameCurrent = false);
 		} else if (character === fieldCharacter) {
-			this.myField.currentLocation = pathCharacter;
+			console.log("You've made it to the path character");
+			this.field[this.verticalLocation][this.horizontalLocation] =
+				pathCharacter;
+			return (this.isGameCurrent = true);
 		} else {
 			console.log("How did we end up here???");
 		}
@@ -39,7 +43,8 @@ class Field {
 	moveRight() {
 		if (this.horizontalLocation <= this.outerBoundHorizontal) {
 			this.horizontalLocation++;
-			this.moveResult(this.printCharacter);
+
+			this.moveResult(this.printCharacter());
 		} else {
 			console.log("You've fallen out of bounds");
 			return this.isGameCurrent === false;
@@ -90,6 +95,7 @@ const playGame = () => {
 		} else {
 			console.log("This isn`t working :(");
 		}
+		console.log(`this.isGameCurrent = ${this.isGameCurrent}`);
 	} while (this.isGameCurrent);
 };
 
