@@ -11,8 +11,8 @@ class Field {
 		this.field = field;
 		this.horizontalLocation = 0;
 		this.verticalLocation = 0;
-		this.currentLocation =
-			this.field[this.verticalLocation][this.horizontalLocation];
+		// this.currentLocation =
+		// 	this.field[this.verticalLocation][this.horizontalLocation];
 	}
 
 	print() {
@@ -31,8 +31,6 @@ class Field {
 		} else if (character === fieldCharacter) {
 			this.field[this.verticalLocation][this.horizontalLocation] =
 				pathCharacter;
-		} else {
-			console.log("How did we end up here???");
 		}
 	}
 	moveRight() {
@@ -77,7 +75,23 @@ class Field {
 			return isGameCurrent;
 		}
 	}
-	generateField(height, width) {}
+	generateField(height, width) {
+		const newField = [[]];
+		for (let i = 0; i <= height; i++) {
+			for (let j = 0; j <= width; j++) {
+				newField[i][j].push(this.characterSelector());
+			}
+		}
+		newField[0][0] = pathCharacter;
+	}
+	characterSelector() {
+		let randomNumber = Math.random();
+		if (randomNumber <= 0.2) {
+			return hole;
+		} else {
+			return fieldCharacter;
+		}
+	}
 }
 
 const myField = new Field([
@@ -86,11 +100,20 @@ const myField = new Field([
 	["░", "^", "░"],
 ]);
 
-const playGame = () => {
+const createGame = () => {
+	let userHeightInput = prompt("Please enter a height for the field ");
+	let userWidthInput = prompt("Please enter a width for the field ");
+	const myField = new Field();
+	myField.generateField(userHeightInput, userWidthInput);
+	playGame(myField);
+};
+
+const playGame = (myField) => {
 	do {
 		myField.print();
 
 		let userInput = prompt("Which way? ");
+
 		if (userInput === "r") {
 			myField.moveRight();
 		} else if (userInput === "l") {
@@ -105,4 +128,4 @@ const playGame = () => {
 	} while (isGameCurrent);
 };
 
-playGame();
+createGame();
