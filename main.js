@@ -23,7 +23,7 @@ class Field {
 	}
 	moveResult(character) {
 		if (character === hat) {
-			console.log("You have won the game");
+			console.log("You have found your hat!");
 			return (isGameCurrent = false);
 		} else if (character === hole) {
 			console.log("Oh no! You've fallen into a hole");
@@ -67,9 +67,9 @@ class Field {
 		}
 	}
 	moveDown() {
-		verticalLocation++;
+		this.verticalLocation++;
 		let outerBoundVertical = this.field.length;
-		if (verticalLocation < outerBoundVertical) {
+		if (this.verticalLocation < outerBoundVertical) {
 			this.moveResult(this.printCharacter());
 		} else {
 			console.log("You've fallen out of bounds");
@@ -77,6 +77,7 @@ class Field {
 			return isGameCurrent;
 		}
 	}
+	generateField(height, width) {}
 }
 
 const myField = new Field([
@@ -89,14 +90,17 @@ const playGame = () => {
 	do {
 		myField.print();
 
-		const userInput = prompt("Which way? ");
-		console.log(userInput);
-		if (userInput === "r" || "R" || "right" || "Right") {
+		let userInput = prompt("Which way? ");
+		if (userInput === "r") {
 			myField.moveRight();
-		} else if (userInput === "l" || "L" || "left" || "Left") {
+		} else if (userInput === "l") {
 			myField.moveLeft();
+		} else if (userInput === "d") {
+			myField.moveDown();
+		} else if (userInput === "u") {
+			myField.moveUp();
 		} else {
-			console.log("This isn`t working :(");
+			console.log("Please enter a valid input (l,r,d,u)");
 		}
 	} while (isGameCurrent);
 };
