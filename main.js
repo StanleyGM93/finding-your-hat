@@ -75,14 +75,16 @@ class Field {
 			return isGameCurrent;
 		}
 	}
-	generateField(height, width) {
-		const newField = [[]];
+	static generateField(height, width) {
+		let newField = [[]];
 		for (let i = 0; i <= height; i++) {
 			for (let j = 0; j <= width; j++) {
 				newField[i][j].push(this.characterSelector());
 			}
 		}
-		newField[0][0] = pathCharacter;
+		return newField;
+		// this.field[0][0] = pathCharacter;
+		// return newField;
 	}
 	characterSelector() {
 		let randomNumber = Math.random();
@@ -94,17 +96,20 @@ class Field {
 	}
 }
 
-const myField = new Field([
-	["*", "░", "O"],
-	["░", "O", "░"],
-	["░", "^", "░"],
-]);
+// let gameArray = new Field([
+// 	["*", "░", "O"],
+// 	["░", "O", "░"],
+// 	["░", "^", "░"],
+// ]);
 
 const createGame = () => {
-	let userHeightInput = prompt("Please enter a height for the field ");
-	let userWidthInput = prompt("Please enter a width for the field ");
-	const myField = new Field();
-	myField.generateField(userHeightInput, userWidthInput);
+	// let userHeightInput = prompt("Please enter a height for the field ");
+	// let userWidthInput = prompt("Please enter a width for the field ");
+	let heightInput = 5;
+	let widthInput = 5;
+	Field.generateField(heightInput, widthInput);
+	let MyField = new Field();
+	console.log(MyField.field);
 	playGame(myField);
 };
 
