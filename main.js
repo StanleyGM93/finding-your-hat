@@ -76,19 +76,23 @@ class Field {
 		}
 	}
 	static generateField(height, width) {
-		let newField = [[]];
-		for (let i = 0; i <= height; i++) {
-			for (let j = 0; j <= width; j++) {
-				newField[i][j].push(this.characterSelector());
+		let randomlyGeneratedField = [];
+		let arrayRow = [];
+		for (let i = 0; i < height; i++) {
+			for (let j = 0; j < width; j++) {
+				arrayRow[j] = this.characterSelector();
 			}
+			randomlyGeneratedField.push(arrayRow);
+			arrayRow = [];
 		}
-		return newField;
-		// this.field[0][0] = pathCharacter;
-		// return newField;
+
+		randomlyGeneratedField[0][0] = pathCharacter;
+		console.log(randomlyGeneratedField);
+		return randomlyGeneratedField;
 	}
-	characterSelector() {
+	static characterSelector() {
 		let randomNumber = Math.random();
-		if (randomNumber <= 0.2) {
+		if (randomNumber <= 0.4) {
 			return hole;
 		} else {
 			return fieldCharacter;
@@ -107,10 +111,9 @@ const createGame = () => {
 	// let userWidthInput = prompt("Please enter a width for the field ");
 	let heightInput = 5;
 	let widthInput = 5;
-	Field.generateField(heightInput, widthInput);
-	let MyField = new Field();
-	console.log(MyField.field);
-	playGame(myField);
+	const newField = Field.generateField(heightInput, widthInput);
+	let MyField = new Field(newField);
+	playGame(MyField);
 };
 
 const playGame = (myField) => {
