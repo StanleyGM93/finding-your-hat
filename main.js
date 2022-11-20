@@ -11,8 +11,6 @@ class Field {
 		this.field = field;
 		this.horizontalLocation = 0;
 		this.verticalLocation = 0;
-		// this.currentLocation =
-		// 	this.field[this.verticalLocation][this.horizontalLocation];
 	}
 
 	print() {
@@ -87,37 +85,40 @@ class Field {
 		}
 
 		randomlyGeneratedField[0][0] = pathCharacter;
-		console.log(randomlyGeneratedField);
+		//Placing hat in lower half of field randomly
+		let randomWidthValue = Math.ceil(Math.random() * width);
+		randomlyGeneratedField[this.placingHat(height)][randomWidthValue] = hat;
 		return randomlyGeneratedField;
 	}
 	static characterSelector() {
 		let randomNumber = Math.random();
-		if (randomNumber <= 0.4) {
+		if (randomNumber <= 0.3) {
 			return hole;
 		} else {
 			return fieldCharacter;
 		}
 	}
+	static placingHat(height) {
+		let randomIndexValue = Math.random();
+		if (randomIndexValue > 0.5) {
+			return Math.floor(randomIndexValue * height);
+		} else {
+			return Math.floor((1 - randomIndexValue) * height);
+		}
+	}
 }
 
-// let gameArray = new Field([
-// 	["*", "░", "O"],
-// 	["░", "O", "░"],
-// 	["░", "^", "░"],
-// ]);
-
 const createGame = () => {
-	// let userHeightInput = prompt("Please enter a height for the field ");
-	// let userWidthInput = prompt("Please enter a width for the field ");
-	let heightInput = 5;
-	let widthInput = 5;
-	const newField = Field.generateField(heightInput, widthInput);
+	let userHeightInput = prompt("Please enter a height for the field ");
+	let userWidthInput = prompt("Please enter a width for the field ");
+	const newField = Field.generateField(userHeightInput, userWidthInput);
 	let MyField = new Field(newField);
 	playGame(MyField);
 };
 
 const playGame = (myField) => {
 	do {
+		console.clear();
 		myField.print();
 
 		let userInput = prompt("Which way? ");
